@@ -6,8 +6,8 @@ import BoardListing from "./pages/BoardListing";
 import TicketListing from "./pages/TicketListing";
 import CreateBoard from "./pages/CreateBoard";
 import CreateTicket from "./pages/CreateTicket";
-import Board from "./pages/Board";
-import Ticket from "./pages/Ticket";
+import Board from "./pages/BoardView";
+import TicketView from "./pages/TicketView";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":ticketId",
-            element: <Ticket />,
+            element: <TicketView />,
           },
         ],
       },

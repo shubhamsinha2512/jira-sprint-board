@@ -1,7 +1,7 @@
 import React from "react";
 
-function Ticket() {
+function TicketView() {
   return <div>Ticket</div>;
 }
 
-export default Ticket;
+export default TicketView;
