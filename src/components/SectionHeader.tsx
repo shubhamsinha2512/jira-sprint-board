@@ -4,7 +4,7 @@ import PT from "prop-types";
 
 function SectionHeader({ title, children }) {
   return (
-    <div className="m-2 flex items-center justify-between">
+    <div className="mx-2 my-3 flex items-center justify-between">
       <Title title={title} />
       {children}
     </div>

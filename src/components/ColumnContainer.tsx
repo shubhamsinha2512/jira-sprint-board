@@ -4,13 +4,16 @@ import TicketCard from "./TicketCard";
 
 function ColumnContainer() {
   return (
-    <div className="grid h-full grid-cols-4">
+    <div className="mt-6 grid h-full grid-cols-5">
       <Column label={"Todo"}>
         <TicketCard />
         <TicketCard />
         <TicketCard />
       </Column>
       <Column label={"In Dev"}>
+        <TicketCard />
+      </Column>
+      <Column label={"Code Review"}>
         <TicketCard />
       </Column>
       <Column label={"In QA"}>
