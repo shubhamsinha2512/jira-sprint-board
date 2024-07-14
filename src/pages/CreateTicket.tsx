@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { addTicket } from "../redux/boardSlice/boardsSlice";
 import { useParams } from "react-router";
 
-let ticketStart: ICreateTicket = {
+let newTicketStart: ICreateTicket = {
   title: "",
   description: "",
   boardId: "",
@@ -47,24 +47,13 @@ function createTicket() {
     .flat()
     .find((ticket) => ticket.id === ticketId) as ITicket;
 
-  if (ticket) {
-    ticketStart = { ...ticket };
-  }
-
   //Local State
   const [tikcet, setTicket] = useState({
-    ...ticketStart,
+    ...newTicketStart,
   });
 
   const columns =
-    boards
-      .find((board) => board.id === tikcet.boardId)
-      ?.columns?.map((column) => {
-        return {
-          id: column,
-          name: column,
-        };
-      }) || [];
+    boards.find((board) => board.id === tikcet.boardId)?.columns || [];
 
   const handleChange = (e) => {
     if (e.target.name === "assignee") {
@@ -79,7 +68,7 @@ function createTicket() {
 
   const handleCreateTicket = (e) => {
     dispatch(addTicket(tikcet));
-    setTicket(ticketStart);
+    setTicket(newTicketStart);
   };
 
   return (
@@ -88,7 +77,6 @@ function createTicket() {
         <Select
           name="boardId"
           label="Board"
-          value={ticket.boardId}
           options={boards}
           onChange={handleChange}
         />
@@ -99,7 +87,6 @@ function createTicket() {
           <Input
             name="title"
             placeholder="Title"
-            value={tikcet.title}
             className="w-full rounded-md bg-stone-100 p-2"
             onChange={handleChange}
           />
@@ -108,7 +95,6 @@ function createTicket() {
             <RichTextarea
               name="description"
               label={"Description"}
-              value={tikcet.description}
               placeholder={"Description"}
               onChange={handleChange}
             />
@@ -122,14 +108,12 @@ function createTicket() {
             name="assignee"
             label="Asignee"
             options={masterData.users}
-            value={tikcet.assignee}
             onChange={handleChange}
           />
 
           <Select
             name="stroyPoints"
             label="Story Points"
-            value={tikcet.storyPoints}
             options={masterData.storyPoints}
             onChange={handleChange}
           />
@@ -137,7 +121,6 @@ function createTicket() {
           <Select
             name="status"
             label="Status"
-            value={tikcet.status}
             options={columns}
             onChange={handleChange}
           />

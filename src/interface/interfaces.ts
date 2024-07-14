@@ -1,5 +1,5 @@
 export interface IState {
-    activeBoard?: IBoard;
+    activeBoardId?: any;
     boards?: IBoard[];
     masterData?: IMasterData;
 }
@@ -75,4 +75,16 @@ export interface ICreateTicket {
     labels?: string[];
     priority?: string;
     dueDate?: string;
+}
+
+export interface KeyValue {
+    id: string;
+    name: string;
+}
+
+export interface IUpdateTicketStatus {
+    boardId: string;
+    ticketId: string;
+    currentTicketStatus: string;
+    nextTicketStatus: string;
 }

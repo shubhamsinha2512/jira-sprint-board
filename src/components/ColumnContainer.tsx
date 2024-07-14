@@ -1,72 +1,57 @@
 import React from "react";
 import Column from "./Column";
+import { IBoard, ITicket, IUpdateTicketStatus } from "../interface/interfaces";
+import { moveTicket } from "../redux/boardSlice/boardsSlice";
+import { setActiveBoardId } from "../redux/boardSlice/activeBoardSlice";
+import { DragDropContext } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 
-const tickets = [
-  {
-    id: "ticket1",
-    columnId: "todo",
-    title: "Implement DND",
-    description: "Kar ke dikhayenge",
-    assignee: "shubham",
-    status: "todo",
-    storyPoint: 3,
-    labels: "",
-    priority: "",
-  },
-  {
-    id: "ticket2",
-    columnId: "in-progress",
-    title: "Fix login issue",
-    description: "Investigate and resolve login bug",
-    assignee: "raj",
-    status: "in-progress",
-    storyPoint: 5,
-    labels: "bug",
-    priority: "high",
-  },
-  {
-    id: "ticket3",
-    columnId: "done",
-    title: "Add new user registration",
-    description: "Enable new user registrations",
-    assignee: "priya",
-    status: "done",
-    storyPoint: 8,
-    labels: "feature",
-    priority: "medium",
-  },
-  {
-    id: "ticket4",
-    columnId: "todo",
-    title: "Update user profile",
-    description: "Allow users to update their profile",
-    assignee: "shubham",
-    status: "todo",
-    storyPoint: 2,
-    labels: "enhancement",
-    priority: "low",
-  },
-  {
-    id: "ticket5",
-    columnId: "in-progress",
-    title: "Optimize database queries",
-    description: "Improve the performance of database queries",
-    assignee: "neha",
-    status: "in-progress",
-    storyPoint: 5,
-    labels: "performance",
-    priority: "high",
-  },
-];
+function ColumnContainer({ board }) {
+  const dispatch = useDispatch();
+  //Segregate tickets
+  const currentBoard: IBoard = { ...board };
+  const columnWiseGroupedTickets = currentBoard.columns.map((column) => {
+    return {
+      columnId: column.id,
+      columnName: column.name,
+      tickets: currentBoard.tickets.filter(
+        (ticket) => ticket.status === column.id,
+      ),
+    };
+  });
 
-function ColumnContainer() {
+  const handleDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+
+    const ticket: ITicket = currentBoard.tickets.find(
+      (ticket) => ticket.id === draggableId,
+    ) as ITicket;
+
+    if (destination !== source) {
+      const moveEvent: IUpdateTicketStatus = {
+        boardId: currentBoard.id,
+        ticketId: ticket.id,
+        currentTicketStatus: source.droppableId,
+        nextTicketStatus: destination.droppableId,
+      };
+
+      dispatch(moveTicket(moveEvent));
+    }
+  };
+
   return (
     <div className="mt-6 grid h-full grid-cols-5">
-      <Column label={"Todo"} tickets={tickets} />
-      <Column label={"In Dev"} />
-      <Column label={"Code Review"} />
-      <Column label={"In QA"} />
-      <Column label={"Released"} />
+      <DragDropContext onDragEnd={handleDragEnd}>
+        {columnWiseGroupedTickets &&
+          columnWiseGroupedTickets.map((columnData) => (
+            <Column
+              key={columnData.columnId}
+              columnId={columnData.columnId}
+              label={columnData.columnName}
+              tickets={columnData.tickets}
+            />
+          ))}
+      </DragDropContext>
     </div>
   );
 }

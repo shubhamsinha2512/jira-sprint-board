@@ -5,6 +5,8 @@ import TicketRowView from "../components/TicketRowView";
 import Select from "../components/Select";
 import { useSelector } from "react-redux";
 import { IBoard, IState, ITicket, IUser } from "../interface/interfaces";
+import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 function TicketListing() {
   //Store Data
@@ -26,14 +28,7 @@ function TicketListing() {
   });
 
   const columns =
-    boards
-      .find((board) => board.id === filters.board)
-      ?.columns?.map((column) => {
-        return {
-          id: column,
-          name: column,
-        };
-      }) || [];
+    boards.find((board) => board.id === filters.board)?.columns || [];
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
@@ -62,7 +57,11 @@ function TicketListing() {
 
   return (
     <div className="h-full">
-      <SectionHeader title="All Tickets" />
+      <SectionHeader title="All Tickets">
+        <Link to={"/tickets/new"}>
+          <Button label={"Create New Ticket"} />
+        </Link>
+      </SectionHeader>
 
       <FilterBar>
         <Select

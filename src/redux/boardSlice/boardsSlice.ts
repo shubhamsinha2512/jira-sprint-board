@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBoard, ICreateBoard, ICreateTicket, ITicket } from "../../interface/interfaces";
+import { IBoard, ICreateBoard, ICreateTicket, ITicket, IUpdateTicketStatus } from "../../interface/interfaces";
 import { v4 as uuid } from 'uuid';
 
 const initialState: IBoard[] = [];
@@ -16,7 +16,7 @@ const boardsSlice = createSlice({
                 name: boardRequest.name,
                 slug: boardRequest.name.toLowerCase().replace(/ /g, "-"),
                 manager: boardRequest.manager,
-                columns: action.payload.columns,
+                columns: action.payload.columns?.map((column: string) => ({ id: uuid(), name: column })) || [],
                 tickets: []
             }
 
@@ -32,7 +32,6 @@ const boardsSlice = createSlice({
             const ticket: ITicket = {
                 id: uuid(),
                 boardId: ticketRequest.boardId,
-                columnId: ticketRequest.columnId,
                 title: ticketRequest.title,
                 description: ticketRequest.description,
                 assignee: ticketRequest.assignee,
@@ -44,9 +43,19 @@ const boardsSlice = createSlice({
             } as ITicket;
 
             state[boardIndex].tickets.push(ticket);
+        },
+        moveTicket: (state, action) => {
+            const moveEvent: IUpdateTicketStatus = action.payload;
+            const boardIndex: number = state.findIndex(
+                (board) => board.id === moveEvent.boardId
+            );
+            const ticketIndex: number = state[boardIndex].tickets.findIndex(
+                (ticket) => ticket.id === moveEvent.ticketId
+            );
+            state[boardIndex].tickets[ticketIndex].status = moveEvent.nextTicketStatus;
         }
     }
 })
 
-export const { addBoard, addTicket } = boardsSlice.actions;
+export const { addBoard, addTicket, moveTicket } = boardsSlice.actions;
 export default boardsSlice.reducer;

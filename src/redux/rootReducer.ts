@@ -5,7 +5,7 @@ import masterDataSlice from "./masterDataSlice";
 
 
 const rootReducer = combineSlices({
-    activeBoard: activeBoardReducer,
+    activeBoardId: activeBoardReducer,
     boards: boardsReducer,
     masterData: masterDataSlice
 });

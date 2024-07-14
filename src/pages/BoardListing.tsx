@@ -6,6 +6,7 @@ import BoardRowView from "../components/BoardRowView";
 import Select from "../components/Select";
 import { useSelector } from "react-redux";
 import { IBoard, IState } from "../interface/interfaces";
+import { Link } from "react-router-dom";
 
 function BoardListing() {
   //Store Data
@@ -44,7 +45,11 @@ function BoardListing() {
 
   return (
     <div className="h-full">
-      <SectionHeader title="All Boards" />
+      <SectionHeader title="All Boards">
+        <Link to={"/boards/new"}>
+          <Button label={"Create New Board"} />
+        </Link>
+      </SectionHeader>
       <FilterBar>
         <Select
           key={1}
