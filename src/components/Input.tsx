@@ -1,12 +1,18 @@
 import React, { forwardRef } from "react";
+import PT from "prop-types";
 
-const Input = forwardRef((props, ref) => {
+const Input = forwardRef(({ label, ...props }, ref) => {
   return (
     <>
-      {props.label && <label className="text-sm">{props.label}</label>}
+      {label && <label className={`text-sm`}>{label}</label>}
       <input ref={ref} {...props} />
     </>
   );
 });
+
+Input.propTypes = {
+  className: PT.string,
+  label: PT.string,
+};
 
 export default Input;

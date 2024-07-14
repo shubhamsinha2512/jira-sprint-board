@@ -1,17 +1,17 @@
 import React from "react";
 import SectionHeader from "../components/SectionHeader";
 import FilterBar from "./FilterBar";
-import Button from "../components/Button";
 import TicketRowView from "../components/TicketRowView";
+import Select from "../components/Select";
 
 function TicketListing() {
   return (
     <div className="h-full">
       <SectionHeader title="All Tickets" />
       <FilterBar>
-        <Button label={"Board Name"} />
-        <Button label={"Asignee"} />
-        <Button label={"Status"} />
+        <Select key={1} label="Board Name" options={[]} />
+        <Select key={2} label="Asignee" options={[]} />
+        <Select key={3} label="Status" options={[]} />
       </FilterBar>
 
       <div className="my-10">

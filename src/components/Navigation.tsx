@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "./Search";
 import { Link } from "react-router-dom";
+import Button from "./Button";
 
 function Navigation() {
   return (
@@ -20,7 +21,9 @@ function Navigation() {
           </span>
         </Link>
       </div>
-      <Search />
+      <div className="flex items-center space-x-3">
+        <Search />
+      </div>
     </nav>
   );
 }

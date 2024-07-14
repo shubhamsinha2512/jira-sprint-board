@@ -3,14 +3,15 @@ import SectionHeader from "../components/SectionHeader";
 import FilterBar from "./FilterBar";
 import Button from "../components/Button";
 import BoardRowView from "../components/BoardRowView";
+import Select from "../components/Select";
 
 function BoardListing() {
   return (
     <div className="h-full">
       <SectionHeader title="All Boards" />
       <FilterBar>
-        <Button label={"Board Name"} />
-        <Button label={"Manager"} />
+        <Select key={1} label="Board Name" options={[]} />
+        <Select key={2} label="Manager" options={[]} />
       </FilterBar>
 
       <div className="my-10">
