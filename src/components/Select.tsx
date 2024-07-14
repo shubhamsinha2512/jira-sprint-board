@@ -1,7 +1,7 @@
 import React from "react";
 import PT from "prop-types";
 
-function Select({ name, label, options, ...props }) {
+function Select({ name, label, options, value, ...props }) {
   return (
     <div className="mx-4 my-2 max-w-sm">
       <select

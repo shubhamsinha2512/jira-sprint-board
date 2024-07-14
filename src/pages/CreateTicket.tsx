@@ -9,13 +9,15 @@ import {
   ICreateTicket,
   IMasterData,
   IState,
+  ITicket,
   IUser,
 } from "../interface/interfaces";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { addTicket } from "../redux/boardSlice/boardsSlice";
+import { useParams } from "react-router";
 
-const newTicketStart: ICreateTicket = {
+let ticketStart: ICreateTicket = {
   title: "",
   description: "",
   boardId: "",
@@ -29,6 +31,7 @@ const newTicketStart: ICreateTicket = {
 
 function createTicket() {
   const dispatch = useDispatch();
+  const ticketId: string = useParams().ticketId;
 
   //Store
   const masterData: IMasterData = useSelector(
@@ -39,9 +42,18 @@ function createTicket() {
     (state: IState) => state.boards,
   ) as IBoard[];
 
+  const ticket: ITicket = boards
+    .map((board) => board.tickets)
+    .flat()
+    .find((ticket) => ticket.id === ticketId) as ITicket;
+
+  if (ticket) {
+    ticketStart = { ...ticket };
+  }
+
   //Local State
   const [tikcet, setTicket] = useState({
-    ...newTicketStart,
+    ...ticketStart,
   });
 
   const columns =
@@ -67,7 +79,7 @@ function createTicket() {
 
   const handleCreateTicket = (e) => {
     dispatch(addTicket(tikcet));
-    setTicket(newTicketStart);
+    setTicket(ticketStart);
   };
 
   return (
@@ -76,6 +88,7 @@ function createTicket() {
         <Select
           name="boardId"
           label="Board"
+          value={ticket.boardId}
           options={boards}
           onChange={handleChange}
         />
@@ -86,6 +99,7 @@ function createTicket() {
           <Input
             name="title"
             placeholder="Title"
+            value={tikcet.title}
             className="w-full rounded-md bg-stone-100 p-2"
             onChange={handleChange}
           />
@@ -94,6 +108,7 @@ function createTicket() {
             <RichTextarea
               name="description"
               label={"Description"}
+              value={tikcet.description}
               placeholder={"Description"}
               onChange={handleChange}
             />
@@ -107,12 +122,14 @@ function createTicket() {
             name="assignee"
             label="Asignee"
             options={masterData.users}
+            value={tikcet.assignee}
             onChange={handleChange}
           />
 
           <Select
             name="stroyPoints"
             label="Story Points"
+            value={tikcet.storyPoints}
             options={masterData.storyPoints}
             onChange={handleChange}
           />
@@ -120,6 +137,7 @@ function createTicket() {
           <Select
             name="status"
             label="Status"
+            value={tikcet.status}
             options={columns}
             onChange={handleChange}
           />

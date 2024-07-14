@@ -48,7 +48,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":ticketId",
-            element: <TicketView />,
+            element: <CreateTicket />,
           },
         ],
       },

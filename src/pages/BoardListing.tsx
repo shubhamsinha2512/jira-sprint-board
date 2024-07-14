@@ -4,13 +4,10 @@ import FilterBar from "./FilterBar";
 import Button from "../components/Button";
 import BoardRowView from "../components/BoardRowView";
 import Select from "../components/Select";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { IBoard, IState } from "../interface/interfaces";
 
 function BoardListing() {
-  const dispatch = useDispatch();
-
   //Store Data
   const managers = useSelector((state: IState) =>
     state.masterData?.users?.filter((user) => user.role === "manager"),
