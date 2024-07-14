@@ -33,11 +33,13 @@ function BoardListing() {
 
     //Filters
     if (filters.board) {
-      results = boards!.filter((board) => board.id === filters.board);
+      results = results!.filter((board) => board.id === filters.board);
     }
 
     if (filters.manager) {
-      results = boards!.filter((board) => board.manager.id === filters.manager);
+      results = results!.filter(
+        (board) => board.manager.id === filters.manager,
+      );
     }
 
     setFilteredBoards(results);

@@ -3,7 +3,7 @@ import PT from "prop-types";
 
 function Select({ name, label, options, ...props }) {
   return (
-    <div className="mx-4 max-w-sm">
+    <div className="mx-4 my-2 max-w-sm">
       <select
         id={name}
         name={name}

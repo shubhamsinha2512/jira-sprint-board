@@ -11,7 +11,7 @@ const RichTextarea = forwardRef(
       <div className="mb-4 w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-700">
         <TextEditorHeader />
         <div className="rounded-b-lg bg-white px-4 py-2 dark:bg-gray-800">
-          <label for="editor" className="sr-only">
+          <label htmlFor="editor" className="sr-only">
             {label}
           </label>
           <textarea

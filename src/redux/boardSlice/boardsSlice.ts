@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBoard, ICreateBoard, ITicket } from "../../interface/interfaces";
+import { IBoard, ICreateBoard, ICreateTicket, ITicket } from "../../interface/interfaces";
 import { v4 as uuid } from 'uuid';
 
 const initialState: IBoard[] = [];
@@ -22,8 +22,31 @@ const boardsSlice = createSlice({
 
             state.push(newBoard);
         },
+        addTicket: (state, action) => {
+            const ticketRequest: ICreateTicket = action.payload;
+
+            const boardIndex: number = state.findIndex(
+                (board) => board.id === ticketRequest.boardId
+            );
+
+            const ticket: ITicket = {
+                id: uuid(),
+                boardId: ticketRequest.boardId,
+                columnId: ticketRequest.columnId,
+                title: ticketRequest.title,
+                description: ticketRequest.description,
+                assignee: ticketRequest.assignee,
+                status: ticketRequest.status,
+                storyPoint: ticketRequest.storyPoints!,
+                labels: ticketRequest.labels!,
+                priority: ticketRequest.priority!,
+                dueDate: ticketRequest.dueDate!,
+            } as ITicket;
+
+            state[boardIndex].tickets.push(ticket);
+        }
     }
 })
 
-export const { addBoard } = boardsSlice.actions;
+export const { addBoard, addTicket } = boardsSlice.actions;
 export default boardsSlice.reducer;

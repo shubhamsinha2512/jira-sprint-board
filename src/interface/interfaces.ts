@@ -7,8 +7,14 @@ export interface IState {
 export interface IMasterData {
     users?: IUser[];
     status?: string[];
+    storyPoints?: StoryPoint[];
     priority?: string[];
     labels?: string[];
+}
+
+export interface StoryPoint {
+    id: string;
+    name: number;
 }
 
 export interface IBoard {
@@ -30,6 +36,7 @@ export interface IColumn {
 
 export interface ITicket {
     id: string;
+    boardId: string;
     columnId: string;
     title: string;
     description: string;
@@ -38,7 +45,7 @@ export interface ITicket {
     storyPoint: number;
     labels: string[];
     priority: string;
-    dueDate: Date;
+    dueDate: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -56,4 +63,16 @@ export interface ICreateBoard {
     slug: string;
     manager: IUser;
     columns: string[];
+}
+
+export interface ICreateTicket {
+    title: string;
+    description: string;
+    boardId: string;
+    assignee: IUser;
+    status: string;
+    storyPoints?: number;
+    labels?: string[];
+    priority?: string;
+    dueDate?: string;
 }

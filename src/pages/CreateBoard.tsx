@@ -37,11 +37,11 @@ function CreateBoard() {
 
   const handleAddColumns = (e) => {
     if (e.key === "Enter") {
-      const addingColumnNamwe = newColumnRef.current.value;
+      const addingColumnNamwe = newColumnRef.current!.value;
       if (board.columns.includes(addingColumnNamwe)) return;
 
       setBoard({ ...board, columns: [...board.columns, addingColumnNamwe] });
-      newColumnRef.current.value = "";
+      newColumnRef.current!.value = "";
     }
   };
 
