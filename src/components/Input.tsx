@@ -11,7 +11,6 @@ const Input = forwardRef(({ label, ...props }, ref) => {
 });
 
 Input.propTypes = {
-  className: PT.string,
   label: PT.string,
 };
 
